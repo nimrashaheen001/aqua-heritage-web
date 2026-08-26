@@ -222,96 +222,154 @@ function Navbar() {
 }
 
 /* ---------------------------------------------
-   Hero (with video)
+   Hero (Video Only)
 --------------------------------------------- */
 function Hero() {
-  const [videoFailed, setVideoFailed] = useState(false);
   const openOrder = useOrderModal();
   const heroRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "22%"]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const mediaY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", "22%"]
+  );
+
+  const contentY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0%", "40%"]
+  );
+
+  const contentOpacity = useTransform(
+    scrollYProgress,
+    [0, 0.8],
+    [1, 0]
+  );
 
   return (
     <section className="hero" ref={heroRef}>
-      <motion.div className="hero-media" style={{ y: mediaY }}>
-        {!videoFailed ? (
-          <motion.video
-            className="hero-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            poster={pureElegance}
-            onError={() => setVideoFailed(true)}
-            initial={{ scale: 1.15, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <source src={CONFIG.heroVideoSrc} type="video/mp4" />
-          </motion.video>
-        ) : (
-          <motion.img
-            src={pureElegance}
-            alt=""
-            className="hero-video"
-            initial={{ scale: 1.15, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 1.6, ease: [0.22, 1, 0.36, 1] }}
+
+      {/* ---------- VIDEO ONLY ---------- */}
+      <motion.div
+        className="hero-media"
+        style={{ y: mediaY }}
+      >
+        <motion.video
+          className="hero-video"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          initial={{ scale: 1.15, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            duration: 1.6,
+            ease: [0.22, 1, 0.36, 1],
+          }}
+        >
+          <source
+            src={CONFIG.heroVideoSrc}
+            type="video/mp4"
           />
-        )}
+        </motion.video>
+
+        {/* Dark overlay over video */}
         <div className="hero-overlay" />
       </motion.div>
 
+      {/* ---------- DROPLETS ---------- */}
       <DropletRain />
 
-      <motion.div className="hero-content" style={{ y: contentY, opacity: contentOpacity }}>
+      {/* ---------- HERO CONTENT ---------- */}
+      <motion.div
+        className="hero-content"
+        style={{
+          y: contentY,
+          opacity: contentOpacity,
+        }}
+      >
+
         <Reveal>
           <div className="eyebrow eyebrow-gold">
             <span className="eyebrow-line eyebrow-line-gold" />
-            <span>Est. 1948 &middot; Purity Since the Source</span>
+
+            <span>
+              Est. 1948 &middot; Purity Since the Source
+            </span>
+
             <span className="eyebrow-line eyebrow-line-gold" />
           </div>
         </Reveal>
+
         <Reveal delay={120}>
           <h1 className="hero-title">
-            Water, Drawn with<br /><em>Old-World Care</em>
+            Water, Drawn with
+            <br />
+            <em>Old-World Care</em>
           </h1>
         </Reveal>
+
         <Reveal delay={240}>
           <p className="hero-sub">
-            For three generations, Aqua Heritage has drawn, filtered, and delivered water the
-            traditional way — patient, deliberate, and true to its source.
+            For three generations, Aqua Heritage has drawn, filtered,
+            and delivered water the traditional way — patient,
+            deliberate, and true to its source.
           </p>
         </Reveal>
+
         <Reveal delay={360}>
           <div className="hero-actions">
+
             <motion.button
               type="button"
               onClick={openOrder}
               className="btn btn-primary"
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.96 }}
+              whileHover={{
+                scale: 1.05,
+                y: -3,
+              }}
+              whileTap={{
+                scale: 0.96,
+              }}
             >
               Order Delivery
             </motion.button>
+
             <motion.a
               href="#about"
               className="btn btn-ghost btn-ghost-light"
-              whileHover={{ scale: 1.05, y: -3 }}
-              whileTap={{ scale: 0.96 }}
+              whileHover={{
+                scale: 1.05,
+                y: -3,
+              }}
+              whileTap={{
+                scale: 0.96,
+              }}
             >
-              <PlayCircle size={18} style={{ marginRight: 8 }} />
+              <PlayCircle
+                size={18}
+                style={{ marginRight: 8 }}
+              />
+
               Our Heritage
             </motion.a>
+
           </div>
         </Reveal>
+
       </motion.div>
 
+      {/* ---------- BOTTOM WAVE ---------- */}
       <div className="hero-wave">
         <WaveDivider color="#F3F8FA" />
       </div>
+
     </section>
   );
 }
@@ -357,47 +415,265 @@ function About() {
 /* ---------------------------------------------
    Services
 --------------------------------------------- */
+
 function Services() {
   const items = [
-    { img: pouringWater, title: "Natural Spring Water", desc: "Sourced from protected springs and bottled at the origin, untouched by processing." },
-    { img: waterDropRipple, title: "Home Purification", desc: "Classical multi-stage filtration systems, installed and tended by our own artisans." },
-    { img: waveDroplets, title: "Scheduled Delivery", desc: "A quiet, reliable rhythm of deliveries — the same care as a century ago, on time." },
+    {
+      img: pouringWater,
+      title: "Natural Spring Water",
+      desc: "Sourced from protected springs and bottled at the origin, untouched by processing.",
+    },
+    {
+      img: waterDropRipple,
+      title: "Home Purification",
+      desc: "Classical multi-stage filtration systems, installed and tended by our own artisans.",
+    },
+    {
+      img: waveDroplets,
+      title: "Scheduled Delivery",
+      desc: "A quiet, reliable rhythm of deliveries — the same care as a century ago, on time.",
+    },
   ];
+
+  /* ---------------------------------------------
+     Container animation
+  --------------------------------------------- */
+  const cardContainer = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.25,
+        delayChildren: 0.15,
+      },
+    },
+  };
+
+  /* ---------------------------------------------
+     Individual card animation
+  --------------------------------------------- */
+  const cardAnimation = {
+    hidden: {
+      opacity: 0,
+      y: 80,
+      scale: 0.92,
+    },
+
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  /* ---------------------------------------------
+     Image animation
+  --------------------------------------------- */
+  const imageAnimation = {
+    hidden: {
+      opacity: 0,
+      scale: 0.65,
+      rotate: -8,
+      y: 30,
+    },
+
+    visible: {
+      opacity: 1,
+      scale: 1,
+      rotate: 0,
+      y: 0,
+
+      transition: {
+        duration: 1,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    },
+  };
+
   return (
     <section id="services" className="section services">
-      <div className="wave-top"><WaveDivider color="#0B3D57" /></div>
+
+      {/* Top wave */}
+      <div className="wave-top">
+        <WaveDivider color="#0B3D57" />
+      </div>
+
       <div className="container">
+
+        {/* ---------------------------------------------
+           Section Heading
+        --------------------------------------------- */}
         <Reveal>
           <div className="section-head-center">
-            <SectionEyebrow dark>What We Offer</SectionEyebrow>
-            <h2 className="section-title light">Services Worth Their <em>Weight</em></h2>
+
+            <SectionEyebrow dark>
+              What We Offer
+            </SectionEyebrow>
+
+            <motion.h2
+              className="section-title light"
+              initial={{
+                opacity: 0,
+                y: 40,
+              }}
+              whileInView={{
+                opacity: 1,
+                y: 0,
+              }}
+              viewport={{
+                once: true,
+                amount: 0.5,
+              }}
+              transition={{
+                duration: 0.8,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              Services Worth Their <em>Weight</em>
+            </motion.h2>
+
           </div>
         </Reveal>
-        <StaggerGroup className="card-grid">
-          {items.map((s) => (
+
+        {/* ---------------------------------------------
+           Animated Cards
+        --------------------------------------------- */}
+        <motion.div
+          className="card-grid"
+          variants={cardContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{
+            once: true,
+            amount: 0.2,
+          }}
+        >
+
+          {items.map((s, index) => (
+
             <motion.div
               key={s.title}
               className="card"
-              variants={staggerItem}
-              whileHover={{ y: -10, boxShadow: "0 22px 46px rgba(11,61,87,0.22)" }}
-              transition={{ type: "spring", stiffness: 260, damping: 20 }}
+              variants={cardAnimation}
+
+              whileHover={{
+                y: -12,
+                scale: 1.025,
+                boxShadow:
+                  "0 25px 55px rgba(11,61,87,0.25)",
+              }}
+
+              transition={{
+                type: "spring",
+                stiffness: 260,
+                damping: 20,
+              }}
             >
-              <div className="card-img-wrap">
+
+              {/* ---------------------------------------------
+                 Image
+              --------------------------------------------- */}
+              <motion.div
+                className="card-img-wrap"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{
+                  once: true,
+                  amount: 0.3,
+                }}
+              >
+
                 <motion.img
                   src={s.img}
                   alt={s.title}
                   className="card-img"
-                  whileHover={{ scale: 1.08 }}
-                  transition={{ duration: 0.5 }}
+                  variants={imageAnimation}
+
+                  whileHover={{
+                    scale: 1.12,
+                    rotate: 1.5,
+                  }}
+
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeOut",
+                  }}
                 />
-              </div>
-              <div className="card-body">
-                <h3 className="card-title">{s.title}</h3>
-                <p className="card-desc">{s.desc}</p>
-              </div>
+
+                {/* Animated glow */}
+                <motion.div
+                  className="image-glow"
+                  initial={{
+                    opacity: 0,
+                    scale: 0.5,
+                  }}
+                  whileInView={{
+                    opacity: 1,
+                    scale: 1,
+                  }}
+                  viewport={{
+                    once: true,
+                  }}
+                  transition={{
+                    delay: 0.4 + index * 0.2,
+                    duration: 0.8,
+                  }}
+                />
+
+              </motion.div>
+
+              {/* ---------------------------------------------
+                 Card Content
+              --------------------------------------------- */}
+              <motion.div
+                className="card-body"
+                initial={{
+                  opacity: 0,
+                  y: 20,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.4,
+                }}
+                transition={{
+                  delay: 0.35 + index * 0.15,
+                  duration: 0.6,
+                }}
+              >
+
+                <motion.h3
+                  className="card-title"
+                  whileHover={{
+                    x: 4,
+                  }}
+                  transition={{
+                    type: "spring",
+                    stiffness: 300,
+                  }}
+                >
+                  {s.title}
+                </motion.h3>
+
+                <p className="card-desc">
+                  {s.desc}
+                </p>
+
+              </motion.div>
+
             </motion.div>
+
           ))}
-        </StaggerGroup>
+
+        </motion.div>
+
       </div>
     </section>
   );
