@@ -96,6 +96,15 @@ img { max-width: 100%; display: block; }
 }
 .wave-top { position: relative; top: -1px; transform: translateY(-100%); }
 
+/* ---------- Droplet rain ---------- */
+.droplet-rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.droplet { position: absolute; top: -20px; display: inline-block; animation-name: fall; animation-timing-function: ease-in; animation-iteration-count: infinite; }
+@keyframes fall {
+  0% { transform: translateY(0) scale(1); opacity: 0; }
+  10% { opacity: 0.85; }
+  90% { opacity: 0.4; }
+  100% { transform: translateY(340px) scale(1); opacity: 0; }
+}
 
 /* ---------- Navbar ---------- */
 .nav {
@@ -223,25 +232,12 @@ img { max-width: 100%; display: block; }
 }
 
 /* ---------- Section titles / body ---------- */
-
-/* ---------- Droplet rain ---------- */
-.droplet-rain { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-.droplet { position: absolute; top: -20px; display: inline-block; animation-name: fall; animation-timing-function: ease-in; animation-iteration-count: infinite; }
-@keyframes fall {
-  0% { transform: translateY(0) scale(1); opacity: 0; }
-  10% { opacity: 0.85; }
-  90% { opacity: 0.4; }
-  100% { transform: translateY(340px) scale(1); opacity: 0; }
-}
-
 .section-title { font-size: clamp(28px, 4vw, 44px); color: var(--navy); font-weight: 500; line-height: 1.2; margin-bottom: 22px; }
 .section-title em { font-style: italic; }
 .section-title.light { color: var(--bg); }
 .section-head-center { text-align: center; margin-bottom: 56px; }
 .body-text { color: var(--muted); line-height: 1.85; font-size: 15.5px; font-weight: 300; margin-bottom: 18px; }
 .light-text { color: var(--pale-blue) !important; }
-
-
 
 /* ---------- About ---------- */
 .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
