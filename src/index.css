@@ -426,15 +426,6 @@ textarea {
   object-fit: cover;
   object-position: center center;
   background: #000;
-
-  /*
-    Prevents unwanted inline gaps around video.
-  */
-  vertical-align: middle;
-
-  /*
-    GPU-friendly rendering.
-  */
   transform: translateZ(0);
   backface-visibility: hidden;
 }
