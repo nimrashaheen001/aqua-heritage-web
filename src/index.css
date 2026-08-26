@@ -31,6 +31,7 @@ body {
   font-family: 'Jost', sans-serif;
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 h1,
@@ -123,7 +124,6 @@ textarea {
   text-transform: uppercase;
   border: 1px solid transparent;
   cursor: pointer;
-
   transition:
     background 0.3s ease,
     color 0.3s ease,
@@ -184,7 +184,6 @@ textarea {
 .reveal {
   opacity: 0;
   transform: translateY(28px);
-
   transition:
     opacity 0.9s cubic-bezier(.22, .61, .36, 1),
     transform 0.9s cubic-bezier(.22, .61, .36, 1);
@@ -253,6 +252,7 @@ textarea {
   inset: 0;
   overflow: hidden;
   pointer-events: none;
+  z-index: 2;
 }
 
 .droplet {
@@ -293,10 +293,8 @@ textarea {
   top: 0;
   z-index: 50;
   background: rgba(243, 248, 250, 0.85);
-
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-
   border-bottom: 1px solid #DCEBF0;
 }
 
@@ -304,7 +302,6 @@ textarea {
   max-width: 1180px;
   margin: 0 auto;
   padding: 16px 28px;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -372,7 +369,6 @@ textarea {
   padding: 0 28px;
   overflow: hidden;
   max-height: 0;
-
   transition:
     max-height 0.4s ease,
     padding 0.4s ease;
@@ -392,7 +388,7 @@ textarea {
 }
 
 /* =========================================================
-   HERO
+   HERO — FULL SCREEN VIDEO
    ========================================================= */
 
 .hero {
@@ -402,8 +398,10 @@ textarea {
   min-height: 100svh;
   overflow: hidden;
   background: #000;
+  isolation: isolate;
 }
 
+/* Video wrapper */
 .hero-media {
   position: absolute;
   inset: 0;
@@ -411,58 +409,74 @@ textarea {
   height: 100%;
   overflow: hidden;
   background: #000;
+  z-index: 0;
+
+  /*
+    Allows Framer Motion to animate the wrapper
+    for the desktop parallax effect.
+  */
+  will-change: transform;
 }
 
+/* Background video */
 .hero-video {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center center;
+  background: #000;
+
+  /*
+    Prevents unwanted inline gaps around video.
+  */
+  vertical-align: middle;
+
+  /*
+    GPU-friendly rendering.
+  */
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-@keyframes heroZoom {
-  0% {
-    transform: scale(1);
-  }
-
-  100% {
-    transform: scale(1.06);
-  }
-}
-
+/* Cinematic overlay */
 .hero-overlay {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  pointer-events: none;
 
   background:
     linear-gradient(
       180deg,
       rgba(11, 61, 87, 0.55) 0%,
       rgba(11, 61, 87, 0.72) 55%,
-      var(--bg) 100%
+      rgba(243, 248, 250, 0.98) 100%
     );
 }
 
+/* Hero content */
 .hero-content {
   position: relative;
-  z-index: 2;
-
+  z-index: 4;
   max-width: 900px;
   min-height: 100vh;
   min-height: 100svh;
-
   margin: 0 auto;
   padding: 160px 28px 220px;
 
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 
   text-align: center;
   color: var(--bg);
+
+  will-change: transform, opacity;
 }
 
+/* Hero title */
 .hero-title {
   font-size: clamp(38px, 6vw, 72px);
   line-height: 1.1;
@@ -475,6 +489,7 @@ textarea {
   color: var(--brass-light);
 }
 
+/* Hero paragraph */
 .hero-sub {
   font-size: 17px;
   line-height: 1.7;
@@ -484,6 +499,7 @@ textarea {
   font-weight: 300;
 }
 
+/* Hero buttons */
 .hero-actions {
   display: flex;
   gap: 16px;
@@ -491,12 +507,13 @@ textarea {
   flex-wrap: wrap;
 }
 
+/* Bottom wave */
 .hero-wave {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 3;
+  z-index: 5;
 }
 
 /* =========================================================
@@ -558,12 +575,10 @@ textarea {
 .about-image-frame::before {
   content: "";
   position: absolute;
-
   top: -18px;
   left: -18px;
   right: 18px;
   bottom: 18px;
-
   border: 1px solid var(--brass);
   z-index: 0;
 }
@@ -572,11 +587,8 @@ textarea {
   position: relative;
   width: 100%;
   border-radius: 2px;
-
   box-shadow: 0 30px 60px rgba(11, 61, 87, 0.18);
-
   z-index: 1;
-
   aspect-ratio: 4 / 5;
   object-fit: cover;
 }
@@ -617,17 +629,12 @@ textarea {
 }
 
 /* Main card */
-
 .card {
   position: relative;
-
   background: var(--navy-2);
-
   border-radius: 3px;
   overflow: hidden;
-
   border: 1px solid rgba(217, 199, 154, 0.18);
-
   will-change: transform;
 
   transition:
@@ -635,38 +642,28 @@ textarea {
     background 0.4s ease;
 }
 
-/* Subtle card border animation */
-
+/* Card hover */
 .card:hover {
   border-color: rgba(217, 199, 154, 0.45);
   background: #10506E;
 }
 
 /* Image container */
-
 .card-img-wrap {
   position: relative;
-
   height: 190px;
-
   overflow: hidden;
-
   isolation: isolate;
 }
 
 /* Image */
-
 .card-img {
   position: relative;
-
   width: 100%;
   height: 100%;
-
   object-fit: cover;
   display: block;
-
   will-change: transform;
-
   transform-origin: center center;
 }
 
@@ -676,21 +673,13 @@ textarea {
 
 .image-glow {
   position: absolute;
-
   inset: 15%;
-
   border-radius: 50%;
-
   background: rgba(255, 255, 255, 0.15);
-
   filter: blur(35px);
-
   pointer-events: none;
-
   z-index: 0;
 }
-
-/* Make image appear above glow */
 
 .card-img-wrap .card-img {
   z-index: 1;
@@ -702,19 +691,15 @@ textarea {
 
 .card-body {
   padding: 26px 24px 30px;
-
   position: relative;
   z-index: 2;
 }
 
 .card-title {
   font-family: 'Cormorant Garamond', serif;
-
   color: var(--bg);
-
   font-size: 22px;
   font-weight: 600;
-
   margin-bottom: 10px;
 
   transition:
@@ -728,11 +713,9 @@ textarea {
 
 .card-desc {
   color: var(--pale-blue);
-
   font-size: 14px;
   line-height: 1.7;
   font-weight: 300;
-
   margin: 0;
 }
 
@@ -742,12 +725,9 @@ textarea {
 
 .card-img-wrap::after {
   content: "";
-
   position: absolute;
-
   top: 0;
   left: -120%;
-
   width: 70%;
   height: 100%;
 
@@ -760,11 +740,8 @@ textarea {
     );
 
   transform: skewX(-20deg);
-
   pointer-events: none;
-
   z-index: 3;
-
   transition: left 0.8s ease;
 }
 
@@ -790,26 +767,20 @@ textarea {
 .value-icon {
   width: 62px;
   height: 62px;
-
   border-radius: 50%;
   border: 1px solid var(--brass);
-
   display: flex;
   align-items: center;
   justify-content: center;
-
   margin: 0 auto 20px;
-
   position: relative;
 }
 
 .ripple-ring {
   position: absolute;
   inset: 0;
-
   border-radius: 50%;
   border: 1px solid rgba(169, 130, 55, 0.5);
-
   animation: ripple 3.4s ease-out infinite;
 }
 
@@ -827,11 +798,9 @@ textarea {
 
 .value-title {
   font-family: 'Cormorant Garamond', serif;
-
   font-size: 19px;
   color: var(--navy);
   font-weight: 600;
-
   margin-bottom: 8px;
 }
 
@@ -848,10 +817,8 @@ textarea {
 
 .gallery {
   position: relative;
-
   height: 60vh;
   min-height: 420px;
-
   overflow: hidden;
 }
 
@@ -864,12 +831,10 @@ textarea {
 .gallery-overlay {
   position: absolute;
   inset: 0;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   text-align: center;
 
   background:
@@ -893,33 +858,23 @@ textarea {
 .testimonial-inner {
   max-width: 720px;
   margin: 0 auto;
-
   text-align: center;
-
   padding: 0 28px;
 }
 
 .testimonial-quote {
   font-family: 'Cormorant Garamond', serif;
-
   font-size: clamp(20px, 3vw, 30px);
-
   font-style: italic;
-
   color: var(--navy);
-
   line-height: 1.5;
-
   margin: 18px 0 20px;
 }
 
 .testimonial-author {
   font-size: 13px;
-
   letter-spacing: 0.4px;
-
   color: var(--muted);
-
   text-transform: uppercase;
 }
 
@@ -929,31 +884,22 @@ textarea {
 
 .contact {
   position: relative;
-
   background: var(--navy);
-
   color: var(--bg);
-
   overflow: hidden;
 }
 
 .contact-grid {
   display: grid;
-
   grid-template-columns: 1.3fr 1fr;
-
   gap: 60px;
-
   padding-bottom: 40px;
 }
 
 .contact-buttons {
   display: flex;
-
   gap: 16px;
-
   flex-wrap: wrap;
-
   margin-top: 8px;
 }
 
@@ -963,39 +909,26 @@ textarea {
 
 .contact-info {
   display: flex;
-
   flex-direction: column;
-
   gap: 20px;
-
   padding-top: 4px;
 }
 
 .contact-row {
   display: flex;
-
   align-items: center;
-
   gap: 14px;
-
   font-size: 14.5px;
-
   font-weight: 300;
-
   color: var(--ice-blue);
 }
 
 .footer-bottom {
   border-top: 1px solid rgba(217, 199, 154, 0.2);
-
   padding: 22px 28px;
-
   text-align: center;
-
   font-size: 12.5px;
-
   color: #7FA8BB;
-
   letter-spacing: 0.3px;
 }
 
@@ -1005,15 +938,12 @@ textarea {
 
 .whatsapp-float {
   position: fixed;
-
   bottom: 24px;
   right: 24px;
-
   z-index: 60;
 
   width: 58px;
   height: 58px;
-
   border-radius: 50%;
 
   background: #25D366;
@@ -1046,13 +976,9 @@ textarea {
 
 .whatsapp-pulse {
   position: absolute;
-
   inset: 0;
-
   border-radius: 50%;
-
   background: #25D366;
-
   pointer-events: none;
 }
 
@@ -1067,39 +993,28 @@ textarea {
 
 .comments-sub {
   max-width: 480px;
-
   margin: 0 auto;
-
   text-align: center;
 }
 
 /* Star rating */
-
 .star-row {
   display: flex;
-
   gap: 3px;
-
   margin-bottom: 14px;
 }
 
 .star-picker {
   display: flex;
-
   gap: 4px;
-
   align-items: center;
 }
 
 .star-picker-btn {
   background: none;
-
   border: none;
-
   cursor: pointer;
-
   padding: 2px;
-
   line-height: 0;
 }
 
@@ -1109,25 +1024,19 @@ textarea {
 
 .review-carousel-wrap {
   position: relative;
-
   margin-bottom: 48px;
 }
 
 .review-track {
   display: flex;
-
   gap: 22px;
-
   overflow-x: auto;
-
   scroll-snap-type: x proximity;
 
   padding: 8px 6px 26px;
-
   margin: 0 -6px;
 
   scrollbar-width: thin;
-
   scrollbar-color: var(--brass-light) transparent;
 }
 
@@ -1137,21 +1046,17 @@ textarea {
 
 .review-track::-webkit-scrollbar-thumb {
   background: var(--brass-light);
-
   border-radius: 6px;
 }
 
 .review-card {
   flex: 0 0 auto;
-
   width: min(360px, 82vw);
 
   scroll-snap-align: start;
 
   background: var(--white);
-
   border: 1px solid #DCEBF0;
-
   border-radius: 18px;
 
   padding: 26px 26px 20px;
@@ -1163,36 +1068,26 @@ textarea {
 
 .review-quote-icon {
   position: absolute;
-
   top: 22px;
   right: 22px;
 }
 
 .review-message {
   font-family: 'Cormorant Garamond', serif;
-
   font-size: 19px;
-
   line-height: 1.55;
-
   color: var(--ink);
-
   font-style: italic;
-
   margin: 0 0 20px;
-
   min-height: 92px;
 }
 
 .review-footer {
   display: flex;
-
   align-items: center;
-
   gap: 12px;
 
   padding-top: 16px;
-
   border-top: 1px solid #EDF4F6;
 
   position: relative;
@@ -1203,51 +1098,37 @@ textarea {
 
   width: 38px;
   height: 38px;
-
   border-radius: 50%;
 
   background: var(--navy);
-
   color: var(--pale-blue);
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   font-family: 'Cormorant Garamond', serif;
-
   font-weight: 600;
-
   font-size: 14px;
 }
 
 .review-person {
   display: flex;
-
   flex-direction: column;
-
   min-width: 0;
-
   flex: 1;
 }
 
 .review-name {
   font-weight: 600;
-
   color: var(--navy);
-
   font-size: 14px;
 }
 
 .review-tag {
   font-size: 10.5px;
-
   letter-spacing: 0.6px;
-
   text-transform: uppercase;
-
   color: var(--brass);
 }
 
@@ -1257,38 +1138,28 @@ textarea {
 
 .review-delete {
   position: absolute;
-
   top: -46px;
-
   right: 0;
 }
 
 .review-nav {
   position: absolute;
-
   top: 40%;
-
   transform: translateY(-50%);
-
   z-index: 3;
 
   width: 38px;
   height: 38px;
-
   border-radius: 50%;
 
   border: 1px solid #DCEBF0;
-
   background: var(--white);
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   cursor: pointer;
-
   color: var(--navy);
 
   box-shadow: 0 8px 20px rgba(11, 61, 87, 0.12);
@@ -1300,9 +1171,7 @@ textarea {
 
 .review-nav:hover {
   background: var(--navy);
-
   color: var(--bg);
-
   transform: translateY(-50%) scale(1.06);
 }
 
@@ -1320,29 +1189,21 @@ textarea {
 
 .comment-form-wrap {
   max-width: 680px;
-
   margin: 0 auto;
 }
 
 .comment-form {
   background: var(--white);
-
   border: 1px solid #DCEBF0;
-
   border-radius: 16px;
-
   padding: 24px;
-
   box-shadow: 0 10px 30px rgba(11, 61, 87, 0.06);
 }
 
 .comment-form-top {
   display: flex;
-
   align-items: center;
-
   gap: 14px;
-
   margin-bottom: 12px;
 }
 
@@ -1351,19 +1212,15 @@ textarea {
   width: 100%;
 
   border: 1px solid #DCEBF0;
-
   border-radius: 10px;
 
   padding: 12px 14px;
 
   font-family: inherit;
-
   font-size: 14.5px;
-
   color: var(--ink);
 
   background: var(--ice-blue);
-
   outline: none;
 
   transition:
@@ -1377,34 +1234,26 @@ textarea {
 
 .comment-textarea {
   resize: vertical;
-
   margin-bottom: 12px;
 }
 
 .comment-input:focus,
 .comment-textarea:focus {
   border-color: var(--mid-blue);
-
   box-shadow: 0 0 0 3px rgba(62, 124, 151, 0.15);
-
   background: var(--white);
 }
 
 .comment-form-footer {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
-
   gap: 12px;
-
   flex-wrap: wrap;
 }
 
 .comment-error {
   color: #C0503E;
-
   font-size: 13px;
 }
 
@@ -1416,15 +1265,12 @@ textarea {
   flex-shrink: 0;
 
   background: none;
-
   border: none;
-
   cursor: pointer;
 
   color: #B9CBD3;
 
   padding: 6px;
-
   border-radius: 8px;
 
   transition:
@@ -1434,17 +1280,13 @@ textarea {
 
 .comment-delete:hover {
   color: #C0503E;
-
   background: #FBEAE7;
 }
 
 .comment-empty {
   text-align: center;
-
   color: var(--muted);
-
   font-size: 14.5px;
-
   padding: 24px;
 }
 
@@ -1454,21 +1296,16 @@ textarea {
 
 .order-modal-backdrop {
   position: fixed;
-
   inset: 0;
-
   z-index: 200;
 
   background: rgba(9, 32, 45, 0.55);
 
   backdrop-filter: blur(6px);
-
   -webkit-backdrop-filter: blur(6px);
 
   display: flex;
-
   align-items: flex-end;
-
   justify-content: center;
 
   padding: 16px;
@@ -1476,7 +1313,6 @@ textarea {
 
 .order-modal {
   width: 100%;
-
   max-width: 440px;
 
   background: var(--white);
@@ -1488,7 +1324,6 @@ textarea {
   box-shadow: 0 30px 80px rgba(9, 32, 45, 0.4);
 
   position: relative;
-
   margin-bottom: 8px;
 }
 
@@ -1496,15 +1331,12 @@ textarea {
   content: "";
 
   position: absolute;
-
   top: 0;
-
   left: 50%;
 
   transform: translateX(-50%);
 
   width: 64px;
-
   height: 4px;
 
   border-radius: 4px;
@@ -1514,9 +1346,7 @@ textarea {
 
 .order-modal-top {
   display: flex;
-
   align-items: center;
-
   justify-content: space-between;
 
   margin: 10px 0 18px;
@@ -1524,35 +1354,26 @@ textarea {
 
 .order-modal-icon {
   width: 52px;
-
   height: 52px;
-
   border-radius: 50%;
 
   background: var(--ice-blue);
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 }
 
 .order-modal-close {
   width: 34px;
-
   height: 34px;
-
   border-radius: 50%;
 
   background: var(--ice-blue);
-
   border: none;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 
   cursor: pointer;
@@ -1564,13 +1385,11 @@ textarea {
 
 .order-modal-close:hover {
   background: #DCEBF0;
-
   transform: rotate(90deg);
 }
 
 .order-modal-eyebrow {
   justify-content: flex-start;
-
   margin-bottom: 10px;
 }
 
@@ -1580,51 +1399,38 @@ textarea {
 
 .order-modal-title {
   font-size: clamp(24px, 5vw, 30px);
-
   color: var(--navy);
-
   font-weight: 500;
-
   line-height: 1.2;
-
   margin-bottom: 12px;
 }
 
 .order-modal-title em {
   font-style: italic;
-
   color: var(--mid-blue);
 }
 
 .order-modal-sub {
   color: var(--muted);
-
   font-size: 14px;
-
   line-height: 1.65;
-
   margin-bottom: 24px;
 }
 
 .order-modal-actions {
   display: flex;
-
   flex-direction: column;
-
   gap: 12px;
 }
 
 .order-option {
   display: flex;
-
   align-items: center;
-
   gap: 14px;
 
   text-decoration: none;
 
   border-radius: 16px;
-
   padding: 14px 16px;
 
   cursor: pointer;
@@ -1636,13 +1442,11 @@ textarea {
 
 .order-option-ghost {
   background: var(--ice-blue);
-
   border: 1px solid #DCEBF0;
 }
 
 .order-option-info {
   background: transparent;
-
   padding: 10px 4px 0;
 }
 
@@ -1651,13 +1455,10 @@ textarea {
 
   width: 40px;
   height: 40px;
-
   border-radius: 50%;
 
   display: flex;
-
   align-items: center;
-
   justify-content: center;
 }
 
@@ -1671,42 +1472,32 @@ textarea {
 
 .order-option-icon-check {
   background: var(--ice-blue);
-
   width: 34px;
   height: 34px;
 }
 
 .order-option-text {
   display: flex;
-
   flex-direction: column;
-
   flex: 1;
-
   min-width: 0;
 }
 
 .order-option-title {
   color: var(--bg);
-
   font-weight: 500;
-
   font-size: 15px;
 }
 
 .order-option-title-dark {
   color: var(--navy);
-
   font-weight: 600;
-
   font-size: 15.5px;
 }
 
 .order-option-desc {
   color: var(--pale-blue);
-
   font-size: 12.5px;
-
   margin-top: 2px;
 }
 
@@ -1716,19 +1507,14 @@ textarea {
 
 .order-option-eyebrow {
   color: var(--muted);
-
   font-size: 10.5px;
-
   letter-spacing: 0.6px;
-
   text-transform: uppercase;
 }
 
 .order-option-arrow {
   flex-shrink: 0;
-
   color: var(--bg);
-
   opacity: 0.8;
 }
 
@@ -1820,20 +1606,23 @@ textarea {
 
   .hero {
     position: relative;
-
     width: 100%;
 
     height: 100svh;
     min-height: 100svh;
 
     overflow: hidden;
-
     background: #000;
   }
 
+  /*
+    Disable the desktop parallax movement on mobile.
+
+    This prevents the Framer Motion transform on
+    .hero-media from creating black gaps.
+  */
   .hero-media {
     position: absolute;
-
     inset: 0;
 
     width: 100%;
@@ -1842,19 +1631,30 @@ textarea {
     overflow: hidden;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
 
     background: #000;
+
+    /*
+      Important:
+      Framer Motion may apply an inline transform.
+      This prevents unwanted visual movement on mobile.
+    */
+    transform: none !important;
   }
 
   /*
-    IMPORTANT:
-    "contain" keeps the COMPLETE video visible.
-    Nothing is cropped on mobile.
-  */
+    IMPORTANT MOBILE VIDEO BEHAVIOR
 
+    "contain" keeps the COMPLETE video visible.
+
+    This means the video itself will not be cropped.
+
+    If your source video has a wide cinematic ratio,
+    black/empty areas may appear above/below or on
+    the sides depending on the phone ratio.
+  */
   .hero-video {
     display: block;
 
@@ -1862,13 +1662,15 @@ textarea {
     height: 100%;
 
     object-fit: contain;
-
     object-position: center center;
+
+    background: #000;
+
+    transform: none;
   }
 
   .hero-overlay {
     position: absolute;
-
     inset: 0;
 
     z-index: 1;
@@ -1884,11 +1686,9 @@ textarea {
 
   .hero-content {
     position: relative;
-
-    z-index: 2;
+    z-index: 4;
 
     width: 100%;
-
     min-height: 100svh;
 
     margin: 0 auto;
@@ -1896,21 +1696,22 @@ textarea {
     padding: 100px 24px 130px;
 
     display: flex;
-
     flex-direction: column;
-
     justify-content: center;
-
     align-items: center;
 
     text-align: center;
+
+    /*
+      Keep content parallax disabled on mobile.
+    */
+    transform: none !important;
   }
 
   .hero-title {
     width: 100%;
 
     font-size: clamp(38px, 10vw, 56px);
-
     line-height: 1.08;
 
     margin-bottom: 18px;
@@ -1918,11 +1719,9 @@ textarea {
 
   .hero-sub {
     width: 100%;
-
     max-width: 500px;
 
     font-size: 15px;
-
     line-height: 1.6;
 
     margin-bottom: 28px;
@@ -1930,11 +1729,9 @@ textarea {
 
   .hero-actions {
     width: 100%;
-
     max-width: 440px;
 
     display: flex;
-
     gap: 12px;
 
     justify-content: center;
@@ -1952,20 +1749,17 @@ textarea {
 
   .stat-row {
     gap: 24px;
-
     flex-wrap: wrap;
   }
 
   .gallery {
     height: 46vh;
-
     min-height: 320px;
   }
 
   .whatsapp-float {
     width: 52px;
     height: 52px;
-
     bottom: 18px;
     right: 18px;
   }
@@ -1974,19 +1768,16 @@ textarea {
 
   .comment-form-footer {
     flex-direction: column;
-
     align-items: stretch;
   }
 
   .comment-submit {
     margin-left: 0;
-
     justify-content: center;
   }
 
   .comment-form-top {
     flex-direction: column;
-
     align-items: stretch;
   }
 
@@ -2047,66 +1838,63 @@ textarea {
 
   .hero-media {
     width: 100%;
-
     height: 100svh;
 
     background: #000;
 
     display: flex;
-
     align-items: center;
     justify-content: center;
+
+    /*
+      Keep mobile parallax disabled.
+    */
+    transform: none !important;
   }
 
   /*
     Keep the COMPLETE video visible
     on small phones as well.
   */
-
   .hero-video {
     width: 100%;
     height: 100%;
 
     object-fit: contain;
-
     object-position: center center;
+
+    transform: none;
   }
 
   .hero-content {
     width: 100%;
-
     min-height: 100svh;
 
     padding: 90px 20px 110px;
+
+    transform: none !important;
   }
 
   .hero-title {
     font-size: 38px;
-
     line-height: 1.08;
-
     margin-bottom: 16px;
   }
 
   .hero-sub {
     font-size: 14px;
-
     line-height: 1.6;
-
     margin-bottom: 26px;
   }
 
   .hero-actions {
     flex-direction: column;
-
     width: 100%;
-
     max-width: 360px;
   }
 
   .hero-actions .btn {
     width: 100%;
-
     min-height: 48px;
   }
 
@@ -2130,9 +1918,7 @@ textarea {
 
   .eyebrow {
     font-size: 10px;
-
     letter-spacing: 0.22em;
-
     gap: 8px;
   }
 
@@ -2148,17 +1934,13 @@ textarea {
 
   .about-image-frame::before {
     top: -10px;
-
     left: -10px;
-
     right: 10px;
-
     bottom: 10px;
   }
 
   .stat-row {
     gap: 20px;
-
     justify-content: space-between;
   }
 
@@ -2174,7 +1956,6 @@ textarea {
 
   .card-grid {
     grid-template-columns: 1fr;
-
     gap: 22px;
   }
 
@@ -2198,7 +1979,6 @@ textarea {
 
   .values-grid {
     grid-template-columns: 1fr;
-
     gap: 25px;
   }
 
@@ -2206,7 +1986,6 @@ textarea {
 
   .gallery {
     height: 52vh;
-
     min-height: 300px;
   }
 
@@ -2232,7 +2011,6 @@ textarea {
 
   .contact-buttons {
     flex-direction: column;
-
     width: 100%;
   }
 
@@ -2242,7 +2020,6 @@ textarea {
 
   .contact-row {
     font-size: 13.5px;
-
     align-items: flex-start;
   }
 
@@ -2250,13 +2027,11 @@ textarea {
 
   .review-card {
     width: calc(100vw - 48px);
-
     padding: 22px 20px 18px;
   }
 
   .review-message {
     font-size: 18px;
-
     min-height: auto;
   }
 
@@ -2272,7 +2047,6 @@ textarea {
 
   .order-modal {
     padding: 26px 20px 22px;
-
     border-radius: 22px 22px 18px 18px;
   }
 
@@ -2282,7 +2056,6 @@ textarea {
 
   .order-option {
     padding: 13px 12px;
-
     gap: 10px;
   }
 
@@ -2308,9 +2081,7 @@ textarea {
 
   .footer-bottom {
     padding: 18px 16px;
-
     font-size: 11px;
-
     line-height: 1.5;
   }
 }
@@ -2323,12 +2094,12 @@ textarea {
 
   .hero {
     height: 100svh;
-
     min-height: 100svh;
   }
 
   .hero-media {
     height: 100svh;
+    transform: none !important;
   }
 
   .hero-video {
@@ -2336,13 +2107,16 @@ textarea {
     height: 100%;
 
     object-fit: contain;
-
     object-position: center center;
+
+    transform: none;
   }
 
   .hero-content {
     padding-left: 16px;
     padding-right: 16px;
+
+    transform: none !important;
   }
 
   .hero-title {
@@ -2359,7 +2133,6 @@ textarea {
 
   .hero-actions .btn {
     padding: 13px 18px;
-
     font-size: 11px;
   }
 
@@ -2428,11 +2201,14 @@ textarea {
     animation: none !important;
   }
 
+  .hero-media,
+  .hero-content {
+    transform: none !important;
+  }
+
   .reveal {
     transition: none;
-
     opacity: 1;
-
     transform: none;
   }
 
