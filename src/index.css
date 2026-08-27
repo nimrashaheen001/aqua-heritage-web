@@ -10,6 +10,8 @@
   --ink: #16262E;
   --muted: #3E5A67;
   --white: #FFFFFF;
+  /* NEW: used for scroll-padding-top so anchor targets don't hide under the sticky nav */
+  --nav-height: 72px;
 }
 
 /* =========================================================
@@ -22,6 +24,10 @@
 
 html {
   scroll-behavior: smooth;
+  /* NEW: keeps anchor-linked sections from landing behind the sticky navbar,
+     which is the most common reason "click link -> scroll to section" looks
+     broken specifically on mobile (nav height changes at the 768px breakpoint) */
+  scroll-padding-top: var(--nav-height);
 }
 
 body {
@@ -70,7 +76,9 @@ textarea {
 
 .section {
   padding: 100px 0;
-  scroll-margin-top: 76px;
+  /* NEW: fallback for browsers/scroll paths that don't respect html's
+     scroll-padding-top (e.g. JS scrollIntoView without offset math) */
+  scroll-margin-top: var(--nav-height);
 }
 
 /* =========================================================
@@ -125,6 +133,10 @@ textarea {
   text-transform: uppercase;
   border: 1px solid transparent;
   cursor: pointer;
+  /* NEW: prevents the mobile browser's 300ms tap delay / double-tap-zoom
+     gesture detection from making buttons feel unresponsive on first tap */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition:
     background 0.3s ease,
     color 0.3s ease,
@@ -333,6 +345,10 @@ textarea {
   position: relative;
   color: var(--navy);
   text-decoration: none;
+  /* NEW: same tap-responsiveness fix as buttons */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
 }
 
 .nav-link::after {
@@ -365,6 +381,12 @@ textarea {
   min-height: 44px;
   align-items: center;
   justify-content: center;
+  /* NEW: this button is the one users tap to open the mobile menu —
+     make sure it's guaranteed to receive the tap cleanly */
+  position: relative;
+  z-index: 52;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .nav-mobile {
@@ -378,6 +400,11 @@ textarea {
     max-height 0.4s ease,
     padding 0.4s ease;
   pointer-events: none;
+  /* NEW: explicit stacking context so this can never end up visually on
+     top but functionally "under" another fixed/absolute element (e.g.
+     .droplet-rain, .whatsapp-float, .hero) intercepting the tap */
+  position: relative;
+  z-index: 51;
 }
 
 .nav-mobile-open {
@@ -397,6 +424,11 @@ textarea {
   text-decoration: none;
   color: var(--navy);
   font-size: 15px;
+  /* NEW: same tap-responsiveness + guarantee-clickable fix */
+  display: block;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
 }
 
 /* =========================================================
@@ -1567,6 +1599,12 @@ textarea {
 
 @media (max-width: 768px) {
 
+  /* NEW: nav height shrinks on mobile, so keep scroll offset in sync
+     with the real .nav-inner padding at this breakpoint */
+  :root {
+    --nav-height: 60px;
+  }
+
   /* ---------- Navbar ---------- */
 
   .nav-inner {
@@ -1579,7 +1617,7 @@ textarea {
   }
 
   .nav-toggle {
-    display: block;
+    display: flex;
   }
 
   .nav-mobile {
