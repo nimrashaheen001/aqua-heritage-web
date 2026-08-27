@@ -390,9 +390,12 @@ function Navbar() {
 
 
         <button
+          type="button"
           className="nav-toggle"
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen((isOpen) => !isOpen)}
           aria-label="Toggle menu"
+          aria-expanded={open}
+          aria-controls="mobile-navigation"
         >
           {open ? (
             <X
@@ -413,6 +416,7 @@ function Navbar() {
       <AnimatePresence>
         {open && (
           <motion.div
+            id="mobile-navigation"
             className="nav-mobile nav-mobile-open"
             initial={{
               height: 0,

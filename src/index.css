@@ -360,6 +360,10 @@ textarea {
   border: none;
   cursor: pointer;
   padding: 4px;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-mobile {
@@ -375,6 +379,11 @@ textarea {
 }
 
 .nav-mobile-open {
+  display: flex;
+  position: relative;
+  z-index: 51;
+  width: 100%;
+  background: var(--bg);
   max-height: 400px;
   padding: 12px 28px 24px;
 }
