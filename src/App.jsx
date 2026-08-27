@@ -413,28 +413,20 @@ function Navbar() {
       </div>
 
 
-      <AnimatePresence>
-        {open && (
-          <motion.div
-            id="mobile-navigation"
-            className="nav-mobile nav-mobile-open"
-            initial={{
-              height: 0,
-              opacity: 0,
-            }}
-            animate={{
-              height: "auto",
-              opacity: 1,
-            }}
-            exit={{
-              height: 0,
-              opacity: 0,
-            }}
-            transition={{
-              duration: 0.35,
-              ease: [0.22, 1, 0.36, 1],
-            }}
-          >
+      <motion.div
+        id="mobile-navigation"
+        className={`nav-mobile ${open ? "nav-mobile-open" : ""}`}
+        initial={false}
+        animate={{
+          height: open ? "auto" : 0,
+          opacity: open ? 1 : 0,
+        }}
+        transition={{
+          duration: 0.35,
+          ease: [0.22, 1, 0.36, 1],
+        }}
+        aria-hidden={!open}
+      >
             {links.map((item) => (
               <a
                 key={item}
@@ -458,9 +450,7 @@ function Navbar() {
             >
               Get Started
             </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      </motion.div>
     </motion.header>
   );
 }

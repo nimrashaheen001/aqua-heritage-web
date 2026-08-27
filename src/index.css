@@ -376,6 +376,7 @@ textarea {
   transition:
     max-height 0.4s ease,
     padding 0.4s ease;
+  pointer-events: none;
 }
 
 .nav-mobile-open {
@@ -386,6 +387,7 @@ textarea {
   background: var(--bg);
   max-height: 400px;
   padding: 12px 28px 24px;
+  pointer-events: auto;
 }
 
 .nav-mobile-link {
