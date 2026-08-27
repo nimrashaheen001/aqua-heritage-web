@@ -609,6 +609,10 @@ textarea {
   gap: 32px;
 }
 
+.service-card-float {
+  will-change: transform;
+}
+
 /* Main card */
 .card {
   position: relative;
@@ -1635,13 +1639,11 @@ textarea {
   /*
     IMPORTANT MOBILE VIDEO BEHAVIOR
 
-    "contain" keeps the COMPLETE video visible.
+    "cover" fills the complete mobile viewport.
 
-    This means the video itself will not be cropped.
-
-    If your source video has a wide cinematic ratio,
-    black/empty areas may appear above/below or on
-    the sides depending on the phone ratio.
+    A wide cinematic source may be cropped slightly
+    at the sides on a tall phone, but no empty areas
+    will appear around the video.
   */
   .hero-video {
     display: block;
@@ -1649,7 +1651,7 @@ textarea {
     width: 100%;
     height: 100%;
 
-    object-fit: contain;
+    object-fit: cover;
     object-position: center center;
 
     background: #000;
@@ -1841,14 +1843,14 @@ textarea {
   }
 
   /*
-    Keep the COMPLETE video visible
+    Keep the video filling the viewport
     on small phones as well.
   */
   .hero-video {
     width: 100%;
     height: 100%;
 
-    object-fit: contain;
+    object-fit: cover;
     object-position: center center;
 
     transform: none;
@@ -2094,7 +2096,7 @@ textarea {
     width: 100%;
     height: 100%;
 
-    object-fit: contain;
+    object-fit: cover;
     object-position: center center;
 
     transform: none;

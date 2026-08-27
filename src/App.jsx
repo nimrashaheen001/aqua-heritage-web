@@ -11,6 +11,7 @@ import {
   AnimatePresence,
   useScroll,
   useTransform,
+  useReducedMotion,
 } from "framer-motion";
 
 import {
@@ -806,6 +807,8 @@ function About() {
 
 function Services() {
 
+  const shouldReduceMotion = useReducedMotion();
+
   const items = [
     {
       img: pouringWater,
@@ -955,8 +958,21 @@ function Services() {
 
             <motion.div
               key={s.title}
-              className="card"
+              className="service-card-float"
               variants={cardAnimation}
+              animate={{
+                y: shouldReduceMotion ? 0 : [0, -3, 0, 3, 0],
+              }}
+              transition={{
+                duration: 5 + index * 0.7,
+                delay: index * 0.4,
+                repeat: shouldReduceMotion ? 0 : Infinity,
+                ease: "easeInOut",
+              }}
+            >
+
+            <motion.div
+              className="card"
 
               whileHover={{
                 y: -12,
@@ -985,12 +1001,12 @@ function Services() {
                 <motion.div
                   className="service-image-float"
                   animate={{
-                    y: [0, -5, 0, 5, 0],
+                    y: shouldReduceMotion ? 0 : [0, -5, 0, 5, 0],
                   }}
                   transition={{
                     duration: 4.5 + index * 0.6,
                     delay: index * 0.35,
-                    repeat: Infinity,
+                    repeat: shouldReduceMotion ? 0 : Infinity,
                     ease: "easeInOut",
                   }}
                 >
@@ -1085,6 +1101,8 @@ function Services() {
                 </p>
 
               </motion.div>
+
+            </motion.div>
 
             </motion.div>
 
