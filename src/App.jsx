@@ -982,22 +982,35 @@ function Services() {
                 }}
               >
 
-                <motion.img
-                  src={s.img}
-                  alt={s.title}
-                  className="card-img"
-                  variants={imageAnimation}
-
-                  whileHover={{
-                    scale: 1.12,
-                    rotate: 1.5,
+                <motion.div
+                  className="service-image-float"
+                  animate={{
+                    y: [0, -5, 0, 5, 0],
                   }}
-
                   transition={{
-                    duration: 0.6,
-                    ease: "easeOut",
+                    duration: 4.5 + index * 0.6,
+                    delay: index * 0.35,
+                    repeat: Infinity,
+                    ease: "easeInOut",
                   }}
-                />
+                >
+                  <motion.img
+                    src={s.img}
+                    alt={s.title}
+                    className="card-img"
+                    variants={imageAnimation}
+
+                    whileHover={{
+                      scale: 1.12,
+                      rotate: 1.5,
+                    }}
+
+                    transition={{
+                      duration: 0.6,
+                      ease: "easeOut",
+                    }}
+                  />
+                </motion.div>
 
 
                 <motion.div
