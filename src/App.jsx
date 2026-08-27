@@ -290,6 +290,18 @@ function Navbar() {
 
   const openOrder = useOrderModal();
 
+  const handleMobileLinkClick = (event, item) => {
+    event.preventDefault();
+    setOpen(false);
+
+    document
+      .getElementById(item.toLowerCase())
+      ?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+  };
+
   const links = [
     "About",
     "Services",
@@ -432,8 +444,8 @@ function Navbar() {
                 key={item}
                 href={`#${item.toLowerCase()}`}
                 className="nav-mobile-link"
-                onClick={() =>
-                  setOpen(false)
+                onClick={(event) =>
+                  handleMobileLinkClick(event, item)
                 }
               >
                 {item}
