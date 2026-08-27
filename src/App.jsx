@@ -47,10 +47,10 @@ import pureElegance from "./assets/pure-elegance.png";
 ========================================================= */
 
 const CONFIG = {
-  whatsappNumber: "15550421948",
-  phone: "+1 (555) 042-1948",
-  email: "hello@aquaheritage.com",
-  address: "14 Millbrook Lane, Riverton",
+  whatsappNumber: "923363333043",
+  phone: "+923363333043",
+  email: "info.royalzee@gmail.com",
+  address: "Lahore, Punjab, Pakistan",
 
   // Put your video here:
   // public/videos/hero.mp4
@@ -599,7 +599,7 @@ function Hero() {
             <span className="eyebrow-line eyebrow-line-gold" />
 
             <span>
-              Est. 1948 &middot; Purity Since the Source
+              Est. 2020 &middot; Purity Since the Source
             </span>
 
             <span className="eyebrow-line eyebrow-line-gold" />
@@ -629,10 +629,10 @@ function Hero() {
         <Reveal delay={240}>
 
           <p className="hero-sub">
-            For three generations, Royal ZEE Water has
-            drawn, filtered, and delivered water the
-            traditional way — patient, deliberate, and
-            true to its source.
+            Since 2020, Royal ZEE Water has drawn,
+            filtered, and delivered water the traditional
+            way — patient, deliberate, and true to its
+            source. Currently delivering across Lahore.
           </p>
 
         </Reveal>
@@ -767,9 +767,9 @@ function About() {
           <div className="stat-row">
 
             {[
-              ["76", "Years of Craft"],
+              ["6", "Years of Craft"],
               ["12", "Natural Sources"],
-              ["1.2M", "Homes Served"],
+              ["1M", "People Served"],
             ].map(([num, label]) => (
 
               <div
@@ -825,7 +825,7 @@ function Services() {
       img: waveDroplets,
       title: "Scheduled Delivery",
       desc:
-        "A quiet, reliable rhythm of deliveries — the same care as a century ago, on time.",
+        "A quiet, reliable rhythm of deliveries across Lahore — the same care as day one, on time.",
     },
   ];
 
@@ -1332,7 +1332,7 @@ function Testimonial() {
 
 
         <div className="testimonial-author">
-          — A Customer Since 1994
+          — A Customer Since 2020
         </div>
 
       </Reveal>
@@ -2077,7 +2077,7 @@ function Contact() {
           <p className="body-text light-text">
             Speak with our team about home delivery,
             purification systems, or bulk orders for
-            your business.
+            your business. Currently delivering in Lahore.
           </p>
 
 
@@ -2186,7 +2186,7 @@ function Contact() {
 
       <div className="footer-bottom">
         © {new Date().getFullYear()} Royal ZEE Water.
-        Crafted with patience, since 1948.
+        Crafted with patience, since 2020.
       </div>
 
     </section>

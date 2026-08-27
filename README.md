@@ -45,10 +45,10 @@ Open `src/App.jsx` and edit the `CONFIG` object near the top:
 
 ```js
 const CONFIG = {
-  whatsappNumber: "15550421948", // your number, digits only, country code first
-  phone: "+1 (555) 042-1948",
-  email: "hello@aquaheritage.com",
-  address: "14 Millbrook Lane, Riverton",
+  whatsappNumber: "923363333043", // your number, digits only, country code first
+  phone: "+923363333043",
+  email: "info.royalzee@gmail.com",
+  address: "Lahore, Punjab, Pakistan",
   heroVideoSrc: "/videos/hero.mp4",
 };
 ```
