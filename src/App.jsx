@@ -339,7 +339,7 @@ function Navbar() {
           />
 
           <span className="brand-name">
-            Aqua Heritage
+            Royal ZEE Water
           </span>
         </motion.div>
 
@@ -629,7 +629,7 @@ function Hero() {
         <Reveal delay={240}>
 
           <p className="hero-sub">
-            For three generations, Aqua Heritage has
+            For three generations, Royal ZEE Water has
             drawn, filtered, and delivered water the
             traditional way — patient, deliberate, and
             true to its source.
@@ -1325,7 +1325,7 @@ function Testimonial() {
 
 
         <p className="testimonial-quote">
-          "Aqua Heritage tastes like water is
+          "Royal ZEE Water tastes like water is
           supposed to taste — the way I remember
           it from my grandmother's well."
         </p>
@@ -1869,7 +1869,7 @@ function Comments() {
                         </span>
 
                         <span className="review-tag">
-                          Aqua Heritage Family
+                          Royal ZEE Water Family
                         </span>
 
                       </div>
@@ -1957,7 +1957,7 @@ function Comments() {
 
 
             <textarea
-              placeholder="Share your experience with Aqua Heritage..."
+              placeholder="Share your experience with Royal ZEE Water..."
               value={message}
               onChange={(e) =>
                 setMessage(e.target.value)
@@ -2185,7 +2185,7 @@ function Contact() {
 
 
       <div className="footer-bottom">
-        © {new Date().getFullYear()} Aqua Heritage.
+        © {new Date().getFullYear()} Royal ZEE Water.
         Crafted with patience, since 1948.
       </div>
 

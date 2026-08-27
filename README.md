@@ -1,4 +1,4 @@
-# Aqua Heritage — Water Company Website
+# Royal ZEE Water — Water Company Website
 
 A classical-themed, light-blue & white React website with animated wave motifs,
 scroll reveals, a video hero section, and WhatsApp/contact integration. Fully
