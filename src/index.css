@@ -597,6 +597,12 @@ textarea {
   position: relative;
 }
 
+.about-video-float {
+  position: relative;
+  z-index: 1;
+  will-change: transform;
+}
+
 .about-image-frame::before {
   content: "";
   position: absolute;

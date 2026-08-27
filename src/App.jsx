@@ -714,6 +714,8 @@ function Hero() {
 ========================================================= */
 
 function About() {
+  const shouldReduceMotion = useReducedMotion();
+
   return (
     <section
       id="about"
@@ -726,16 +728,44 @@ function About() {
 
           <div className="about-image-frame">
 
-            <video
-              src={CONFIG.heroVideoSrc}
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label="Flowing water"
-              className="about-image"
-            />
+            <motion.div
+              className="about-video-float"
+              animate={{
+                y: shouldReduceMotion ? 0 : [0, -4, 0, 4, 0],
+              }}
+              transition={{
+                duration: 6,
+                repeat: shouldReduceMotion ? 0 : Infinity,
+                ease: "easeInOut",
+              }}
+            >
+              <motion.video
+                src={CONFIG.heroVideoSrc}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                aria-label="Flowing water"
+                className="about-image"
+                initial={{
+                  opacity: 0,
+                  scale: 1.08,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  scale: 1,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.35,
+                }}
+                transition={{
+                  duration: 1.1,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              />
+            </motion.div>
 
           </div>
 
