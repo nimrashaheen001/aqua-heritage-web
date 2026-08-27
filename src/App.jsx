@@ -727,9 +727,14 @@ function About() {
 
           <div className="about-image-frame">
 
-            <img
-              src={waveDroplets}
-              alt="Graceful water waves and crystal droplets"
+            <video
+              src={CONFIG.heroVideoSrc}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-label="Flowing water"
               className="about-image"
             />
 
